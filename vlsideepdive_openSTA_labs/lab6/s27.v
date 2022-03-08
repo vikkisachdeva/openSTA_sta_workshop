@@ -18,20 +18,17 @@ input clk_net,reset_net;
 output G17;
 
 wire n1,n2,n3,n4,n5,n6,n7,n8,n9;
-DFFR_X2 F1 (.D(G0), .CK(clk_net), .Q(n1));
-INV_X1 U3 (.A(n1), .ZN(n2));
-INV_X1 U4 (.A(n2), .ZN(n3));
-NAND2_X2 U6 (.ZN(n4), .A1(n1), .A2(n3));
-NAND2_X2 U5 (.ZN(n5), .A1(n3), .A2(n2));
-NOR2_X1 U7 (.ZN(n6), .A1(n4), .A2(n5));
-DFFR_X2 F2 (.D(G1), .CK(gclk), .Q(G17));
+sky130_fd_sc_hd__dfbbp_1 F1 (.D(G0), .CLK(clk_net), .Q(n1),.RESET_B(1'b1),.SET_B(1'b1));
+sky130_fd_sc_hd__inv_1 U3 (.A(n1), .Y(n2));
+sky130_fd_sc_hd__inv_1 U4 (.A(n2), .Y(n3));
+sky130_fd_sc_hd__nand2_1 U6 (.Y(n4), .A(n1), .B(n3));
+sky130_fd_sc_hd__nand2_1 U5 (.Y(n5), .A(n3), .B(n2));
+sky130_fd_sc_hd__nor2_1 U7 (.Y(n6), .A(n4), .B(n5));
+sky130_fd_sc_hd__dfbbp_1 F2 (.D(G1), .CLK(gclk), .Q(G17),.RESET_B(1'b1),.SET_B(1'b1));
 
 //Clock Gating Analysis
 wire gclk;
-AND2_X4 CG (.ZN(gclk), .A1(n6), .A2(n8));
-INV_X1 U9 (.A(clk_net), .ZN(n7));
-INV_X1 U10 (.A(n7), .ZN(n8));
-
+sky130_fd_sc_hd__dlclkp_4 clkgate (.CLK(clk_net),.GATE(n6),.GCLK(gclk)); 
 endmodule
 
 

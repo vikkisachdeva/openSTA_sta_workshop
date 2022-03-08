@@ -20,11 +20,11 @@ output G17;
 wire n1,n2,n3,n4,n5,n6,n7,n8,n9;
 wire rst_sync;
 // Reset Synchronizer
-DFFR_X2 SYNC1 (.D(1'b1), .CK(clk_net), .RN(rst), .Q(n1));
-DFFR_X2 SYNC2 (.D(n1), .CK(clk_net), .RN(rst), .Q(rst_sync));
+sky130_fd_sc_hd__dfbbp_1 SYNC1 (.D(1'b1), .CLK(clk_net), .RESET_B(rst), .Q(n1),.SET_B(1'b1));
+sky130_fd_sc_hd__dfbbp_1 SYNC2 (.D(n1), .CLK(clk_net), .RESET_B(rst), .Q(rst_sync));
 
 // Functional Register
-DFFR_X2 R1 (.D(G0), .CK(clk_net), .RN(rst_sync), .Q(G17));
+sky130_fd_sc_hd__dfbbp_1 R1 (.D(G0), .CLK(clk_net), .RESET_B(rst_sync), .Q(G17),.SET_B(1'b1));
 
 endmodule
 
